@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Date } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { OrderStatus } from '@hireaboat/common';
 import { BoatDoc } from './boat';
@@ -9,7 +9,9 @@ export { OrderStatus };
 interface OrderAttrs {
   userId: string;
   status: OrderStatus;
-  expiresAt: Date;
+  startDate: Date;
+  endDate: Date;
+  bookingAmount: number;
   boat: BoatDoc;
 }
 
@@ -17,7 +19,9 @@ interface OrderAttrs {
 interface OrderDoc extends mongoose.Document {
   userId: string;
   status: OrderStatus;
-  expiresAt: Date;
+  startDate: Date;
+  endDate: Date;
+  bookingAmount: number;
   boat: BoatDoc;
   version: number;
 }
@@ -39,8 +43,17 @@ const orderSchema = new mongoose.Schema(
       enum: Object.values(OrderStatus),
       default: OrderStatus.Created,
     },
-    expiresAt: {
+    startDate: {
       type: mongoose.Schema.Types.Date,
+      required: true,
+    },
+    endDate: {
+      type: mongoose.Schema.Types.Date,
+      require: true,
+    },
+    bookingAmount: {
+      type: Number,
+      required: true,
     },
     Boat: {
       type: mongoose.Schema.Types.ObjectId,
