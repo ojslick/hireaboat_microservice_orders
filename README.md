@@ -1,4 +1,4 @@
-# hireaboat_microservice_boats
+# hireaboat_microservice_orders
 
 ## Installation
 
@@ -18,4 +18,3 @@ $ skaffold dev
 ```bash
 $ npm run test
 ```
-# hireaboat_microservice_orders
