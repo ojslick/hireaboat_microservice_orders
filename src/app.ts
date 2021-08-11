@@ -4,11 +4,7 @@ import { json } from 'body-parser';
 import { NotFoundError, errorHandler, currentUser } from '@hireaboat/common';
 
 import cookieSession from 'cookie-session';
-import { createBoatRouter } from './routes/new';
-import { showBoatRouter } from './routes/show';
-import { updateBoatRouter } from './routes/update';
-import { showBoatsRouter } from './routes';
-import { deleteBoatRouter } from './routes/delete';
+import { newOrderRouter } from './routes/new';
 
 const app = express();
 app.set('trust proxy', true);
@@ -22,11 +18,7 @@ app.use(
 
 app.use(currentUser);
 
-app.use(showBoatsRouter);
-app.use(createBoatRouter);
-app.use(showBoatRouter);
-app.use(updateBoatRouter);
-app.use(deleteBoatRouter);
+app.use(newOrderRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
