@@ -95,10 +95,6 @@ const boatSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    userId: {
-      type: String,
-      required: true,
-    },
   },
   {
     toJSON: {

@@ -8,8 +8,10 @@ import {
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import mongoose from 'mongoose';
+import { OrderCreatedPublisher } from '../events/publisher/order-created-publisher';
 import { Boat } from '../models/boat';
 import { Order } from '../models/order';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -60,6 +62,18 @@ router.post(
       boat,
     });
     await order.save();
+
+    await new OrderCreatedPublisher(natsWrapper.client).publish({
+      id: order.id,
+      version: order.version,
+      status: order.status,
+      userId: order.userId,
+      startDate: order.startDate.toString(),
+      endDate: order.endDate.toString(),
+      bookingAmount: order.bookingAmount,
+      //@ts-ignore
+      boat,
+    });
 
     res.status(201).send(order);
   }
