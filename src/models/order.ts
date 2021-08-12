@@ -55,7 +55,7 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    Boat: {
+    boat: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Boat',
     },

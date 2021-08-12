@@ -48,9 +48,21 @@ router.post(
 
     // calculate the bookingAmount
     //TODO: add time of the day for start date and end date
-    const differenceInTime =
-      new Date(endDate).getTime() - new Date(startDate).getTime();
-    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+    const calDifferencInDays = () => {
+      const differenceInTime =
+        new Date(endDate).getTime() - new Date(startDate).getTime();
+      const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+      if (new Date(startDate).getTime() > new Date(endDate).getTime()) {
+        throw new BadRequestError('Start date cannot be greater than End date');
+      } else if (
+        new Date(endDate).getTime() - new Date(startDate).getTime() ===
+        0
+      ) {
+        return 1 * boat.price;
+      } else {
+        return differenceInDays * boat.price;
+      }
+    };
 
     //Build the order and save it to the database
     const order = Order.build({
@@ -58,7 +70,7 @@ router.post(
       status: OrderStatus.Created,
       startDate,
       endDate,
-      bookingAmount: differenceInDays * boat.price,
+      bookingAmount: calDifferencInDays(),
       boat,
     });
     await order.save();
