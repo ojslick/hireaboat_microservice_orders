@@ -37,6 +37,8 @@ router.post(
 
     const boat = await Boat.findById(boatId);
 
+    const boats = await Boat.find();
+
     if (!boat) {
       throw new NotFoundError();
     }
@@ -48,7 +50,7 @@ router.post(
 
     // calculate the bookingAmount
     //TODO: add time of the day for start date and end date
-    const calDifferencInDays = () => {
+    const calDifferenceInDays = () => {
       const differenceInTime =
         new Date(endDate).getTime() - new Date(startDate).getTime();
       const differenceInDays = differenceInTime / (1000 * 3600 * 24);
@@ -70,7 +72,7 @@ router.post(
       status: OrderStatus.Created,
       startDate,
       endDate,
-      bookingAmount: calDifferencInDays(),
+      bookingAmount: calDifferenceInDays(),
       boat,
     });
     await order.save();
