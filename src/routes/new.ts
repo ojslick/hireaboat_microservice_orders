@@ -37,8 +37,6 @@ router.post(
 
     const boat = await Boat.findById(boatId);
 
-    const boats = await Boat.find();
-
     if (!boat) {
       throw new NotFoundError();
     }
