@@ -6,6 +6,7 @@ import { NotFoundError, errorHandler, currentUser } from '@hireaboat/common';
 import cookieSession from 'cookie-session';
 import { newOrderRouter } from './routes/new';
 import { showOrdersRouter } from './routes';
+import { showOrderRouter } from './routes/show';
 
 const app = express();
 app.set('trust proxy', true);
@@ -21,6 +22,7 @@ app.use(currentUser);
 
 app.use(newOrderRouter);
 app.use(showOrdersRouter);
+app.use(showOrderRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();

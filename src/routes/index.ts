@@ -9,10 +9,6 @@ router.get('/api/orders', requireAuth, async (req: Request, res: Response) => {
     'boat'
   );
 
-  if (!order) {
-    throw new NotFoundError();
-  }
-
   res.status(200).send(order);
 });
 
