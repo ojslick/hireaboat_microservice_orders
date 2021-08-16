@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hireaboat/common": "^1.0.29",
+    "@hireaboat/common": "^1.0.30",
     "@ojembatickets/common": "^1.0.15",
     "@types/cookie-session": "^2.0.43",
     "@types/express": "^4.17.13",
