@@ -33,6 +33,7 @@ export interface BoatDoc extends mongoose.Document {
   boatCapicity: number;
   boatDescription: string;
   photos: string[];
+  version?: number;
   isReserved(): Promise<boolean>;
 }
 
