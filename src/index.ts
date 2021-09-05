@@ -2,6 +2,8 @@ import { app } from './app';
 import mongoose from 'mongoose';
 import { natsWrapper } from './nats-wrapper';
 import { BoatCreatedListener } from './events/listener/boat-created-listener';
+import { BoatDeletedListener } from './events/listener/boat-deleted-listener';
+import { BoatUpdatedListener } from './events/listener/boat-updated-listener';
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -19,6 +21,8 @@ const start = async () => {
     process.on('SIGTERM', () => natsWrapper.client.close());
 
     new BoatCreatedListener(natsWrapper.client).listen();
+    new BoatDeletedListener(natsWrapper.client).listen();
+    new BoatUpdatedListener(natsWrapper.client).listen();
 
     await mongoose.connect('mongodb://orders-mongo-srv:27017/orders', {
       useNewUrlParser: true,

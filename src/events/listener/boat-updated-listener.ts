@@ -8,6 +8,7 @@ export class BoatUpdatedListener extends Listener<BoatUpdatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: BoatUpdatedEvent['data'], msg: Message) {
+    //@ts-ignore
     const boat = await Boat.findByEvent(data);
 
     if (!boat) {
